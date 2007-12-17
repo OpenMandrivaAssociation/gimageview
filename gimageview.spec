@@ -16,7 +16,6 @@ Source0: %{name}-%{version}.tar.bz2
 Patch1:	fix_autogen.patch.bz2
 Requires: mplayer %libname
 BuildRequires: gtk+2-devel librsvg-devel libwmf-devel libxine-devel 
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
 GImageView is a GTK+2 based image viewer.
