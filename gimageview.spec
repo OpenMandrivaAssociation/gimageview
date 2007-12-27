@@ -8,8 +8,8 @@ URL:		http://www.homa.ne.jp/~ashie/gimageview/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		fix_autogen.patch
 Suggests:	mplayer
-Obsoletes:	%{mklibname gimageview 0}
-Obsoletes:	%{mklibname gimageview 0 -d}
+Obsoletes:	%{mklibname gimageview 0} <= %{version}-%{release}
+Obsoletes:	%{mklibname gimageview 0 -d} <= %{version}-%{release}
 BuildRequires:	gtk+2-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libwmf-devel
