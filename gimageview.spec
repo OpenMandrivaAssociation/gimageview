@@ -13,7 +13,8 @@ Obsoletes:	%{mklibname gimageview 0 -d} <= %{version}-%{release}
 BuildRequires:	gtk+2-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libwmf-devel
-BuildRequires:	libxine-devel 
+BuildRequires:	libxine-devel
+BuildRequires:	automake1.7
 
 %description
 GImageView is a GTK+2-based image viewer.
@@ -28,7 +29,7 @@ rm -rf %{buildroot}
 %patch0 -p0
 
 %build
-autoreconf
+sh autogen.sh
 %configure2_5x --with-gtk2 --with-xine --enable-mplayer --disable-splash
 %make
 
