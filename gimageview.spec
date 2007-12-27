@@ -6,7 +6,6 @@ License:	GPLv2+
 Group:		Graphics
 URL:		http://www.homa.ne.jp/~ashie/gimageview/
 Source0:	%{name}-%{version}.tar.bz2
-Patch0:		fix_autogen.patch
 Suggests:	mplayer
 Obsoletes:	%{mklibname gimageview 0} <= %{version}-%{release}
 Obsoletes:	%{mklibname gimageview 0 -d} <= %{version}-%{release}
@@ -14,7 +13,6 @@ BuildRequires:	gtk+2-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libwmf-devel
 BuildRequires:	libxine-devel
-BuildRequires:	automake1.7
 
 %description
 GImageView is a GTK+2-based image viewer.
@@ -26,11 +24,9 @@ play movies/music.
 %prep
 rm -rf %{buildroot}
 %setup -q
-%patch0 -p0
 
 %build
-sh autogen.sh
-%configure2_5x --with-gtk2 --with-xine --enable-mplayer --disable-splash
+%configure2_5x --with-gtk2 --with-xine --enable-mplayer --disable-splash --disable-rpath
 %make
 
 %install
