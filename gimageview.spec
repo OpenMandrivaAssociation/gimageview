@@ -28,7 +28,7 @@ rm -rf %{buildroot}
 %patch0 -p0
 
 %build
-sh autogen.sh
+autoreconf
 %configure2_5x --with-gtk2 --with-xine --enable-mplayer --disable-splash
 %make
 
