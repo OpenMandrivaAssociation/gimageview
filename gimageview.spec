@@ -1,111 +1,74 @@
-%define name     gimageview
-%define version  0.2.27
-%define release  %mkrel 2
-
-%define libname_orig %mklibname %{name}
-%define libname %{libname_orig}0
-
-Summary: A GTK+2 based image viewer that supports xine and mplayer
-Name: %{name}
-Version: %{version}
-Release: %{release}
-License: GPL
-Group: Graphics
-URL: http://www.homa.ne.jp/~ashie/gimageview/
-Source0: %{name}-%{version}.tar.bz2
-Patch1:	fix_autogen.patch.bz2
-Requires: mplayer %libname
-BuildRequires: gtk+2-devel librsvg-devel libwmf-devel libxine-devel 
+Summary:	A GTK+2 based image viewer that supports xine and mplayer
+Name:		gimageview
+Version:	0.2.27
+Release:	%mkrel 3
+License:	GPLv2+
+Group:		Graphics
+URL:		http://www.homa.ne.jp/~ashie/gimageview/
+Source0:	%{name}-%{version}.tar.bz2
+Patch0:		fix_autogen.patch
+Suggests:	mplayer
+Obsoletes:	%{mklibname gimageview 0}
+Obsoletes:	%{mklibname gimageview 0 -d}
+BuildRequires:	gtk+2-devel
+BuildRequires:	librsvg-devel
+BuildRequires:	libwmf-devel
+BuildRequires:	libxine-devel 
 
 %description
-GImageView is a GTK+2 based image viewer.
+GImageView is a GTK+2-based image viewer.
 It supports tabbed browsing, thumbnail table views, directory tree views,
 drag and drop, reading thumbnail cache of other famous image viewers,
-and flexible user interface. Also it supports xine and mplayer. So you can
+and flexible user interface. Also it supports xine and mplayer, so you can
 play movies/music. 
 
-
-%package -n %{libname}
-Summary:	Gimageview library
-Group:		Graphics
-Provides:	%{libname_orig} = %{version}-%{release}
-
-%description -n %{libname}
-gimageview library.
-
-%package -n %{libname}-devel
-Summary:	Headers of gimageview for development
-Group:		Development/C
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{version}-%{release}
-Provides:	%{libname_orig}-devel = %{version}-%{release}
-
-%description -n %{libname}-devel
-Headers of %{name} for development.
-
 %prep
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %{buildroot}
 %setup -q
-
-%patch1 -p0
+%patch0 -p0
 
 %build
-
 sh autogen.sh
-%configure --with-gtk2 --with-xine --enable-mplayer --disable-splash
+%configure2_5x --with-gtk2 --with-xine --enable-mplayer --disable-splash
 %make
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-
+%{__rm} -rf %{buildroot}
 %{makeinstall}
+rm -rf %{buildroot}%{_datadir}/gnome
 
 # menu
-mkdir -p %{buildroot}%{_menudir}
-cat > %{buildroot}%{_menudir}/%{name} <<EOF
-?package(%{name}): \
- command="%{_bindir}/gimv" \
- icon="graphics_section.png" \
- title="Gimagview" \
- longtitle="A browser for graphics files" \
- needs="x11" \
- section="Multimedia/Graphics"
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop <<EOF
+[Desktop Entry]
+Name=GImageView
+Comment=Image viewer and browser
+Exec=%{_bindir}/gimv 
+Icon=graphics_section
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=image/bmp;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-gray;image/x-icb;image/x-ico;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-xbitmap;image/x-xpixmap;image/x-pcx;image/svg+xml;image/vnd.wap.wbmp;
+Categories=GTK;AudioVideo;Graphics;2DGraphics;Viewer
 EOF
 
 %find_lang %{name}
 
 %post 
-%update_menus
+%{update_menus}
 
 %postun
-%clean_menus
+%{clean_menus}
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
-%files -f %name.lang
+%files -f %{name}.lang
 %defattr(-, root, root)
-%doc %{_docdir}/%{name}
+%doc AUTHORS ChangeLog HACKING NEWS README TODO 
 %{_bindir}/gimv
 %{_datadir}/pixmaps/gimv.png
-%{_datadir}/gnome/apps/Graphics/gimageview.desktop
-%{_datadir}/%{name}/gtkrc
-%{_datadir}/%{name}/mplayerrc
-%{_datadir}/%{name}/pixmaps/default/*.xpm
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/pixmaps/
-%dir %{_datadir}/%{name}/pixmaps/default/
-%_menudir/*
-
-%files -n %{libname}
-%defattr(-,root,root)
-%doc COPYING
-%{_libdir}/%{name}/*/*.so
-
-%files -n %{libname}-devel
-%defattr(-,root,root)
-%doc COPYING
-%{_libdir}/%{name}/*/*.la
-
+%{_datadir}/applications/mandriva-%{name}.desktop
+%{_datadir}/%{name}
+%{_libdir}/%{name}
 
