@@ -1,7 +1,7 @@
 Summary:	A GTK+2 based image viewer that supports xine and mplayer
 Name:		gimageview
 Version:	0.2.27
-Release:	%mkrel 3
+Release:	%mkrel 5
 License:	GPLv2+
 Group:		Graphics
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
