@@ -5,7 +5,7 @@ Release:	%mkrel 6
 License:	GPLv2+
 Group:		Graphics
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-URL:		http://www.homa.ne.jp/~ashie/gimageview/
+URL:		https://www.homa.ne.jp/~ashie/gimageview/
 Source0:	%{name}-%{version}.tar.bz2
 Suggests:	mplayer
 Obsoletes:	%{mklibname gimageview 0} <= %{version}-%{release}
