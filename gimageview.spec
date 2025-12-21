@@ -10,6 +10,11 @@ Source0:	%{name}-%{version}.tar.bz2
 Suggests:	mplayer
 Obsoletes:	%{mklibname gimageview 0} <= %{version}-%{release}
 Obsoletes:	%{mklibname gimageview 0 -d} <= %{version}-%{release}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gtk+2-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libwmf-devel
